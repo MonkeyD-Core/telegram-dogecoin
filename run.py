@@ -52,7 +52,7 @@ def process(message,username,chatid):
 	elif "/balance" in message[0]:
 		try:
 			(balance, pending_balance) = returnBal(username)
-			sendMsg("@"+username+" Balance : "+balance+ "Doge ("+pending_balance+" Doge)",chatid)
+			sendMsg("@"+username+" Balance : "+balance+ "Doge ("+pending_balance+" Doge Pending)",chatid)
 		except:
 			sendMsg("@"+username+" you are not registered yet. use /register to register.",chatid)
 	elif "/tip" in message[0]:
@@ -84,6 +84,12 @@ def process(message,username,chatid):
 			sendMsg("@"+username+" your address is "+data['data']['address']+"",chatid)
 		except:
 			sendMsg("@"+username+" you are not registered yet. use /register to register.",chatid)
+	elif "/deposit" in message[0]:
+		try:
+			data = block_io.get_address_by_label(label=username)
+			sendMsg("@"+username+" your deposit address is "+data['data']['address']+"",chatid)
+		except:
+			sendMsg("@"+username+" you are not registered yet. use /register to register.",chatid)
 	elif "/withdraw" in message[0]:
 		try:
 			amount = abs(float(message[1]))
@@ -105,7 +111,7 @@ def process(message,username,chatid):
 			name = username
 			username = ((username+',') * (number - 1)) + username
 			if number < 2:
-				sendMsg("@"+username+" less than 2 shibes are active.",chatid)
+				sendMsg("@"+username+" less than 2 Users are active.",chatid)
 			else:
 				print(amount)
 				print(username)
